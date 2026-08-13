@@ -17,3 +17,18 @@ class Node {
 }
 ```
 
+Now for the actual transistors, they can have a type which will determine behavior either NMOS or PMOS, and a Node pointer for the drain, source, and gate. Then getters and setters, along with a method to calculate the behavior of the transistor, and one to get the value.
+
+```
+class Transistor{
+    Transistor_Type type;
+    Node * drain;
+    Node * source;
+    Node * gate;
+
+    void update();
+    bool getOutput() const;
+}
+```
+
+I wrote the update logic and it was pretty interesting as in a perfect world, our code is correct but it does simplify some of the real world electrical circuit considerations such as what happens when a transistor is off, my code would simply not change the value which might work for our computer but in the real world it is simply floating and capacitance could lead to it having some charge. A minor limitation of my design but I think it is fine for our project.

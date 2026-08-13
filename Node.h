@@ -1,12 +1,16 @@
+#ifndef NODE_H
+#define NODE_H
+
 class Node {
+    private:
+        bool signal;
 
-private:
-    bool signal;
+    public:
+        Node();
+        Node(bool signal);
 
-public:
-    Node();
-    Node(bool initialValue);
-
-    void setSignal(bool value);
-    bool getSignal() const;
+        void setSignal(bool value);
+        bool getSignal() const;
 };
+
+#endif
