@@ -6,7 +6,7 @@ Transistor::Transistor(): type(NMOS), drain(nullptr), source(nullptr), gate(null
 }
 
 Transistor::Transistor(Transistor_Type type, Node* drain, Node* source, Node* gate) :
-                        type(type), drain(drain), source(source), gate(gate) {
+                                type(type), drain(drain), source(source), gate(gate) {
 
 }
 
