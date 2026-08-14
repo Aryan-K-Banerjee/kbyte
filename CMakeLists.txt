@@ -14,6 +14,7 @@ enable_testing()
 add_library(kbyte_core
     src/Node.cpp
     src/Transistor.cpp
+    src/NotGate.cpp
 )
 
 target_include_directories(kbyte_core PUBLIC src)
@@ -35,3 +36,12 @@ add_executable(test_transistor
 target_link_libraries(test_transistor PRIVATE kbyte_core)
 
 add_test(NAME transistor_tests COMMAND test_transistor)
+
+# Not Gate Tests
+add_executable(test_notgate
+    tests/test_notgate.cpp
+)
+
+target_link_libraries(test_notgate PRIVATE kbyte_core)
+
+add_test(NAME notgate_tests COMMAND test_notgate)

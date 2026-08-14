@@ -1,9 +1,7 @@
 #include "Node.h"
 
-Node::Node() : signal(false) {
-}
-
-Node::Node(bool initialValue) : signal(initialValue){
+Node::Node(bool initialValue) : 
+    signal(initialValue){
 }
 
 void Node::setSignal(bool value){

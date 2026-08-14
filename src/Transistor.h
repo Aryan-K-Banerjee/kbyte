@@ -18,21 +18,20 @@ class Transistor{
         Node * gate;
     
     public:
-        Transistor();
-        Transistor(Transistor_Type type, Node* drain, Node* source, Node* gate);
+        Transistor(Transistor_Type type, Node* source, Node* gate, Node* drain);
 
         void setType(Transistor_Type type);
-        void connectDrain(Node* node);
         void connectSource(Node* node);
         void connectGate(Node* node);
+        void connectDrain(Node* node);
 
         Transistor_Type getType() const;
-        Node* getDrain() const;
         Node* getSource() const;
         Node* getGate() const;
+        Node* getDrain() const;
 
         void update();
-        bool getOutput() const;
+        bool getOutputVal() const;
         
 };
 

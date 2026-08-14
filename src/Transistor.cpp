@@ -1,22 +1,17 @@
 #include "Transistor.h"
 #include <stdexcept>
 
-// Constructors
-Transistor::Transistor(): type(NMOS), drain(nullptr), source(nullptr), gate(nullptr) {    
-}
-
-Transistor::Transistor(Transistor_Type type, Node* drain, Node* source, Node* gate) :
-                                type(type), drain(drain), source(source), gate(gate) {
-
+// Constructor
+Transistor::Transistor(Transistor_Type type, Node* source, Node* gate, Node* drain) :
+    type(type),
+    source(source),
+    gate(gate),
+    drain(drain) {
 }
 
 //Setters
 void Transistor::setType(Transistor_Type type){
     this->type = type;
-}
-
-void Transistor::connectDrain(Node* drain){
-    this->drain = drain;
 }
 
 void Transistor::connectSource(Node* source){
@@ -27,13 +22,13 @@ void Transistor::connectGate(Node* gate){
     this->gate = gate;
 }
 
+void Transistor::connectDrain(Node* drain){
+    this->drain = drain;
+}
+
 //Getters
 Transistor::Transistor_Type Transistor::getType() const{
     return type;
-}
-
-Node* Transistor::getDrain() const{
-    return drain;
 }
 
 Node* Transistor::getSource() const{
@@ -42,6 +37,10 @@ Node* Transistor::getSource() const{
 
 Node* Transistor::getGate() const{
     return gate;
+}
+
+Node* Transistor::getDrain() const{
+    return drain;
 }
 
 //Main function to update the logic and run the transistor
@@ -65,7 +64,7 @@ void Transistor::update() {
     }
 }
 
-bool Transistor::getOutput() const{
+bool Transistor::getOutputVal() const{
     if(drain == nullptr){
         throw std::runtime_error("Drain is Null, cannot get Output!");
     }

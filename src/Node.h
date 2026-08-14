@@ -6,7 +6,6 @@ class Node {
         bool signal;
 
     public:
-        Node();
         Node(bool signal);
 
         void setSignal(bool value);

@@ -27,8 +27,47 @@ class Transistor{
     Node * gate;
 
     void update();
-    bool getOutput() const;
+    bool getOutputVal() const;
 }
 ```
 
 I wrote the update logic and it was pretty interesting as in a perfect world, our code is correct but it does simplify some of the real world electrical circuit considerations such as what happens when a transistor is off, my code would simply not change the value which might work for our computer but in the real world it is simply floating and capacitance could lead to it having some charge. A minor limitation of my design but I think it is fine for our project.
+
+### Step 1.5: Testing and Build Config
+I realized this sort of project is a good chance to learn real C++ build tools and testing methods so I have refactored into this format.
+
+src/                        //The source headers and cpp
+    Node.h
+    Node.cpp
+    ...
+tests/                      //Test Files
+    test_node.cpp
+    test_transistor.cpp
+    ...
+build/                      //This is where the build files go
+CMakeLists.txt          //This is the build file
+
+So I have decided to learn how CMake works. I have used Makefiles before for normal C, I realize CMake is used widely in the industry as well so I have created my build config using CMake for this project. I have also incorporated CTest which is technically part of CMake so that creates my test suite.
+
+## Step 2: Gates (Not, Nand, ...)
+Now that we have transistors, we will make the base gates necessary for the computer and its smaller components. I will start with the Not / Inverter.
+
+I will create the Not Gate using 4 nodes and 2 transisters, a PMOS and NMOS, which is how it is actually constructed. And in the cpp, the vdd, ground, pmos, and nmos are stored as members of the class not pointers as they exist only within the gate, while input and output are pointers as they connect the gate to external nodes.
+
+```
+class NotGate{
+    Node vdd;
+    Node ground;
+    Node* input;
+    Node* output;
+    Transistor pmos;
+    Transistor nmos;
+
+    void update();
+    bool getOutputVal() const;
+}
+```
+
+So basically I am mapping the transistor level circuit to Nodes and Transistors within the constructor, and the update function basically updates the transistor.
+
+I will use this method to create all the necessary gates.
