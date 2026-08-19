@@ -1,4 +1,4 @@
-#include "Node.h"
+#include "circuits/Node.h"
 #include <cassert>
 
 // Test that a Node can be initialized low.

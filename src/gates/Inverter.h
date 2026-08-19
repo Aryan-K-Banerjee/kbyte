@@ -1,10 +1,11 @@
-#ifndef NOTGATE_H
-#define NOTGATE_H
+#ifndef INVERTER_H
+#define INVERTER_H
 
-#include "Node.h"
-#include "Transistor.h"
+#include "circuits/Node.h"
+#include "circuits/Transistor.h"
+#include "circuits/Circuit.h"
 
-class NotGate {
+class Inverter {
     private:
         Node vdd;
         Node ground;
@@ -12,12 +13,10 @@ class NotGate {
         Node* output;
         Transistor pmos;
         Transistor nmos;
+        Circuit circuit;
     
     public:
-        NotGate(Node* input, Node* output);
-
-        void setInput(Node* input);
-        void setOutput(Node* output);
+        Inverter(Node* input, Node* output);
 
         Node* getInput() const;
         Node* getOutput() const;

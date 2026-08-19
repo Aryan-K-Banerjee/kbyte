@@ -1,3 +1,4 @@
+//src/circuits/Transistor.h
 #ifndef TRANSISTOR_H
 #define TRANSISTOR_H
 
@@ -30,8 +31,7 @@ class Transistor{
         Node* getGate() const;
         Node* getDrain() const;
 
-        void update();
-        bool getOutputVal() const;
+        bool isConducting() const;
         
 };
 

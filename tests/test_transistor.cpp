@@ -1,9 +1,10 @@
-#include "Transistor.h"
+#include "circuits/Transistor.h"
 #include <cassert>
+#include <stdexcept>
 
 // NMOS should conduct when the gate is high.
 void testNMOSOn(){
-    Node source(true);
+    Node source(false);
     Node gate(true);
     Node drain(false);
 
@@ -14,15 +15,12 @@ void testNMOSOn(){
         &drain
     );
 
-    transistor.update();
-
-    assert(drain.getSignal() == true);
-    assert(transistor.getOutputVal() == true);
+    assert(transistor.isConducting() == true);
 }
 
 // NMOS should not conduct when the gate is low.
 void testNMOSOff(){
-    Node source(true);
+    Node source(false);
     Node gate(false);
     Node drain(false);
 
@@ -33,15 +31,12 @@ void testNMOSOff(){
         &drain
     );
 
-    transistor.update();
-
-    // Drain remains unchanged because the transistor is off.
-    assert(drain.getSignal() == false);
+    assert(transistor.isConducting() == false);
 }
 
 // PMOS should conduct when the gate is low.
 void testPMOSOn(){
-    Node source(true);
+    Node source(false);
     Node gate(false);
     Node drain(false);
 
@@ -52,15 +47,12 @@ void testPMOSOn(){
         &drain
     );
 
-    transistor.update();
-
-    assert(drain.getSignal() == true);
-    assert(transistor.getOutputVal() == true);
+    assert(transistor.isConducting() == true);
 }
 
 // PMOS should not conduct when the gate is high.
 void testPMOSOff(){
-    Node source(true);
+    Node source(false);
     Node gate(true);
     Node drain(false);
 
@@ -71,10 +63,51 @@ void testPMOSOff(){
         &drain
     );
 
-    transistor.update();
+    assert(transistor.isConducting() == false);
+}
 
-    // Drain remains unchanged because the transistor is off.
-    assert(drain.getSignal() == false);
+// Changing the gate should change the conduction state.
+void testGateChange(){
+    Node source(false);
+    Node gate(false);
+    Node drain(false);
+
+    Transistor transistor(
+        Transistor::NMOS,
+        &source,
+        &gate,
+        &drain
+    );
+
+    assert(transistor.isConducting() == false);
+
+    gate.setSignal(true);
+
+    assert(transistor.isConducting() == true);
+}
+
+// An unconnected transistor should throw an error.
+void testUnconnectedTransistor(){
+    Node source(false);
+    Node gate(true);
+
+    Transistor transistor(
+        Transistor::NMOS,
+        &source,
+        &gate,
+        nullptr
+    );
+
+    bool threwError = false;
+
+    try{
+        transistor.isConducting();
+    }
+    catch(const std::runtime_error&){
+        threwError = true;
+    }
+
+    assert(threwError == true);
 }
 
 int main(){
@@ -83,6 +116,8 @@ int main(){
     testNMOSOff();
     testPMOSOn();
     testPMOSOff();
+    testGateChange();
+    testUnconnectedTransistor();
 
     return 0;
 }

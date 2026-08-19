@@ -1,3 +1,4 @@
+//src/circuits/Transistor.cpp
 #include "Transistor.h"
 #include <stdexcept>
 
@@ -43,30 +44,24 @@ Node* Transistor::getDrain() const{
     return drain;
 }
 
-//Main function to update the logic and run the transistor
-void Transistor::update() {
+//Main function to check the conduction logic
+bool Transistor::isConducting() const{
     if(drain == nullptr || source == nullptr || gate == nullptr){
         throw std::runtime_error("Transistor has an unconnected node!");
     }
 
     if(type == NMOS){
         if(gate->getSignal()){
-            drain->setSignal(source->getSignal());
+            return true;
         }
     }
     else if(type == PMOS){
         if(!gate->getSignal()){
-            drain->setSignal(source->getSignal());
+            return true;
         }
     }
     else{
         throw std::runtime_error("Transistor has an invalid type!");
     }
-}
-
-bool Transistor::getOutputVal() const{
-    if(drain == nullptr){
-        throw std::runtime_error("Drain is Null, cannot get Output!");
-    }
-    return drain->getSignal();
+    return false;
 }

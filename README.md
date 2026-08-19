@@ -71,3 +71,35 @@ class NotGate{
 So basically I am mapping the transistor level circuit to Nodes and Transistors within the constructor, and the update function basically updates the transistor.
 
 I will use this method to create all the necessary gates.
+
+### PROBLEM FOUND
+While building the NAND gate, I found a limitation in my transistor model. My update() function copies the source value to the drain when a transistor is on, but a real transistor instead creates a conductive connection between the source and drain. This matters when multiple transistors are connected because a node containing 0 is not necessarily connected to ground, it could simply be floating.
+
+For the solution, I realized we need to see the whole circuit, not just one part. So I will have a circuit class that evaluates circuits and instead of update(), the transistor will now simply determine whether it is conducting based on its type and gate. Then the circuit class can check and evaluate the node values.
+
+```
+class Transistor{
+    Transistor_Type type;
+    Node* drain;
+    Node* source;
+    Node* gate;
+
+    bool isConducting() const;
+}
+```
+
+For the circuit class, it will basically be like the physical topology by keeping track of the nodes, transistors, and which nodes are externally driven. When evaluating, it starts by marking the driven nodes as already known, then goes through each transistor and checks whether its gate has been evaluated and whether the transistor is conducting. If one side of a conducting transistor is known and the other is not, it copies the known value across the connection and marks the new node as evaluated. It keeps repeating this process while new nodes are being evaluated, which lets signals propagate through multiple connected transistors without depending on a specific update order.
+
+```
+class Circuit{
+    std::unordered_set<Node*> nodes;
+    std::unordered_set<Node*> driven_nodes;
+    std::unordered_set<Transistor*> transistors;
+
+    void evaluate();
+}
+```
+
+At this point I think we are done with the base physical layer for now and can continue to make the gates necessary.
+
+## Step 2 Continued: Gates (All needed for making a computer)
