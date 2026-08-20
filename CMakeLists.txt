@@ -17,6 +17,8 @@ add_library(kbyte_core
     src/circuits/Circuit.cpp
     src/gates/Inverter.cpp
     src/gates/NAND2.cpp
+    src/gates/NOR2.cpp
+    src/gates/XOR2.cpp
 )
 
 target_include_directories(kbyte_core PUBLIC src)
@@ -56,3 +58,21 @@ add_executable(test_nand2
 target_link_libraries(test_nand2 PRIVATE kbyte_core)
 
 add_test(NAME nand2_tests COMMAND test_nand2)
+
+# NOR2 Tests
+add_executable(test_nor2
+    tests/test_nor2.cpp
+)
+
+target_link_libraries(test_nor2 PRIVATE kbyte_core)
+
+add_test(NAME nor2_tests COMMAND test_nor2)
+
+# XOR2 Tests
+add_executable(test_xor2
+    tests/test_xor2.cpp
+)
+
+target_link_libraries(test_xor2 PRIVATE kbyte_core)
+
+add_test(NAME xor2_tests COMMAND test_xor2)
