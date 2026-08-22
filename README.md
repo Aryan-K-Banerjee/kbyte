@@ -102,4 +102,12 @@ class Circuit{
 
 At this point I think we are done with the base physical layer for now and can continue to make the gates necessary.
 
-## Step 2 Continued: Gates (All needed for making a computer)
+## Step 3: Components
+
+At the component level I realized timing starts to matter. I don't want to simulate real nanoseconds or transistor-level electrical delay, so I simplified it by saying every logic gate takes 1 simulated tick. Components are then just circuits of gates and nodes, and their propagation delay comes from the logic depth. Gates on the same level can update in parallel, while gates that depend on earlier outputs update on later ticks. This gives each component a simple critical path based on the longest chain of gates.
+
+I started with the Half Adder, then used two Half Adders to make a Full Adder, and finally chained 8 Full Adders into an 8-bit Ripple Carry Adder. The Half Adder calculates Sum and Carry, while the Full Adder adds a Carry In so they can be chained. For the Ripple Carry Adder, carry has to propagate from one Full Adder into the next. For now I use a conservative timing model where each Full Adder completely settles before the next begins, which keeps the logic simple and prevents stale carry values.
+
+## Step 4: CPU Components
+
+For the ALU I used a bit-sliced design. I first made an ALU1 which takes one bit from A and B and can perform ADD, AND, OR, or XOR. All four possible results are calculated and MUXes use the opcode bits to collapse them into the final result. I then chained 8 ALU1 slices together to make an ALU8, with carry propagating between the slices for addition and the same opcode being sent to every slice. At this point I have my first actual CPU component, and its behavior still traces all the way down through the gates, circuit evaluator, and transistors.

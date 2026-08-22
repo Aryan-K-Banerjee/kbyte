@@ -20,6 +20,11 @@ add_library(kbyte_core
     src/gates/NOR2.cpp
     src/gates/XOR2.cpp
     src/components/HalfAdder.cpp
+    src/components/FullAdder.cpp
+    src/components/RippleCarryAdder8.cpp
+    src/components/MUX2.cpp
+    src/cpu/ALU1.cpp
+    src/cpu/ALU8.cpp
 )
 
 target_include_directories(kbyte_core PUBLIC src)
@@ -86,3 +91,48 @@ add_executable(test_half_adder
 target_link_libraries(test_half_adder PRIVATE kbyte_core)
 
 add_test(NAME half_adder_tests COMMAND test_half_adder)
+
+# Full Adder Tests
+add_executable(test_full_adder
+    tests/test_full_adder.cpp
+)
+
+target_link_libraries(test_full_adder PRIVATE kbyte_core)
+
+add_test(NAME full_adder_tests COMMAND test_full_adder)
+
+# Ripple Carry Adder 8 Tests
+add_executable(test_ripple_carry_adder8
+    tests/test_ripple_carry_adder8.cpp
+)
+
+target_link_libraries(test_ripple_carry_adder8 PRIVATE kbyte_core)
+
+add_test(NAME ripple_carry_adder8_tests COMMAND test_ripple_carry_adder8)
+
+# MUX2 Tests
+add_executable(test_mux2
+    tests/test_mux2.cpp
+)
+
+target_link_libraries(test_mux2 PRIVATE kbyte_core)
+
+add_test(NAME mux2_tests COMMAND test_mux2)
+
+# ALU1 Tests
+add_executable(test_alu1
+    tests/test_alu1.cpp
+)
+
+target_link_libraries(test_alu1 PRIVATE kbyte_core)
+
+add_test(NAME alu1_tests COMMAND test_alu1)
+
+# ALU8 Tests
+add_executable(test_alu8
+    tests/test_alu8.cpp
+)
+
+target_link_libraries(test_alu8 PRIVATE kbyte_core)
+
+add_test(NAME alu8_tests COMMAND test_alu8)
