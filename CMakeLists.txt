@@ -19,6 +19,7 @@ add_library(kbyte_core
     src/gates/NAND2.cpp
     src/gates/NOR2.cpp
     src/gates/XOR2.cpp
+    src/components/HalfAdder.cpp
 )
 
 target_include_directories(kbyte_core PUBLIC src)
@@ -76,3 +77,12 @@ add_executable(test_xor2
 target_link_libraries(test_xor2 PRIVATE kbyte_core)
 
 add_test(NAME xor2_tests COMMAND test_xor2)
+
+# Half Adder Tests
+add_executable(test_half_adder
+    tests/test_half_adder.cpp
+)
+
+target_link_libraries(test_half_adder PRIVATE kbyte_core)
+
+add_test(NAME half_adder_tests COMMAND test_half_adder)
